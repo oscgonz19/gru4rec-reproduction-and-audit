@@ -1,0 +1,39 @@
+[project]
+name = "gru4rec-reproduction-and-audit"
+version = "1.0.0"
+description = "Reproducible evaluation harness around the official GRU4Rec implementation"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Oscar Gonzalez"}
+]
+keywords = [
+    "recommender-systems",
+    "session-based-recommendation",
+    "pytorch",
+    "reproducible-research",
+    "deep-learning"
+]
+
+dependencies = [
+    "torch>=2.0",
+    "numpy>=1.24,<2.0",
+    "pandas>=2.0",
+    "matplotlib>=3.7",
+    "optuna>=3.0",
+    "joblib>=1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.1.0",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N"]
+ignore = ["E501"]

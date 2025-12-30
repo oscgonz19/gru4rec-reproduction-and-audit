@@ -33,6 +33,18 @@ The official GRU4Rec PyTorch implementation by [Balazs Hidasi](https://github.co
 
 ---
 
+## Documentation / Documentacion
+
+| Document | English | Espanol | Audience |
+|----------|---------|---------|----------|
+| **Case Study** | [case_study.md](docs/en/case_study.md) | [case_study.md](docs/es/case_study.md) | Portfolio |
+| **Executive Summary** | [executive_summary.md](docs/en/executive_summary.md) | [executive_summary.md](docs/es/executive_summary.md) | Managers |
+| **Technical Report** | [technical_report.md](docs/en/technical_report.md) | [technical_report.md](docs/es/technical_report.md) | Engineers |
+| **Pipeline Explained** | [pipeline_explained.md](docs/en/pipeline_explained.md) | [pipeline_explained.md](docs/es/pipeline_explained.md) | Data Scientists |
+| **Mathematical Formulas** | [mathematical_formulas.md](docs/en/mathematical_formulas.md) | [mathematical_formulas.md](docs/es/mathematical_formulas.md) | Researchers |
+
+---
+
 ## El Problema que Resuelve
 
 ```
@@ -231,20 +243,6 @@ make ci
 |-------------|------------------------|
 | GRU4Rec vs Popularity baseline | 10-30% |
 | GRU4Rec vs sin recomendaciones | 200-400% |
-
----
-
-## Documentacion Completa
-
-### Matriz de Documentos
-
-| Documento | English | Espanol | Audiencia |
-|-----------|---------|---------|-----------|
-| **Caso de Estudio** | [case_study.md](docs/en/case_study.md) | [case_study.md](docs/es/case_study.md) | Portfolio |
-| **Resumen Ejecutivo** | [executive_summary.md](docs/en/executive_summary.md) | [executive_summary.md](docs/es/executive_summary.md) | Managers |
-| **Reporte Tecnico** | [technical_report.md](docs/en/technical_report.md) | [technical_report.md](docs/es/technical_report.md) | Engineers |
-| **Pipeline Explicado** | [pipeline_explained.md](docs/en/pipeline_explained.md) | [pipeline_explained.md](docs/es/pipeline_explained.md) | Data Scientists |
-| **Formulas Matematicas** | [mathematical_formulas.md](docs/en/mathematical_formulas.md) | [mathematical_formulas.md](docs/es/mathematical_formulas.md) | Researchers |
 
 ---
 
