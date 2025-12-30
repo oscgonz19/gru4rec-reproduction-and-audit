@@ -1,4 +1,4 @@
-# Estudio de Reproducibilidad GRU4Rec: Caso de Estudio para Portafolio
+# Estudio de Reproducibilidad GRU4Rec: Caso de Estudio
 
 **Tipo de Proyecto:** Investigacion e Implementacion de Machine Learning
 **Dominio:** Sistemas de Recomendacion / Deep Learning
