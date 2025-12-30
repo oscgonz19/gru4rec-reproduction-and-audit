@@ -1,4 +1,4 @@
-# GRU4Rec Reproduction Study: Portfolio Case Study
+# GRU4Rec Reproduction Study: Case Study
 
 **Project Type:** Machine Learning Research & Implementation
 **Domain:** Recommender Systems / Deep Learning
