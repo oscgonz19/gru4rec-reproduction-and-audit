@@ -1,0 +1,63 @@
+# =============================================================================
+# CRITICAL: Files that must NEVER be in the public repo
+# =============================================================================
+
+# Vendor directory - contains cloned official GRU4Rec (license restrictions)
+# The fetch_official.py script downloads this on demand
+vendor/
+
+# Model weights - too large, not needed for reproduction
+*.pt
+*.pth
+*.ckpt
+
+# Data splits - generated from synthetic data via make preprocess
+data/train.tsv
+data/test.tsv
+
+# =============================================================================
+# Standard Python ignores
+# =============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

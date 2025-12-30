@@ -1,0 +1,100 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Fetch official GRU4Rec
+        run: python scripts/fetch_official.py
+
+      - name: Generate synthetic data
+        run: python scripts/make_synth_data.py --n_sessions 500 --n_items 100
+
+      - name: Preprocess data
+        run: python scripts/preprocess_sessions.py --input data/synth_sessions.tsv --output_dir data
+
+      - name: Run baselines
+        run: |
+          python -c "
+          from src.baselines import PopularityBaseline, MarkovBaseline
+          import pandas as pd
+
+          train = pd.read_csv('data/train.tsv', sep='\t')
+          test = pd.read_csv('data/test.tsv', sep='\t')
+
+          print('=== Popularity Baseline ===')
+          pop = PopularityBaseline()
+          pop.fit(train)
+          print(pop.evaluate(test, k=[5, 10, 20]))
+
+          print('=== Markov Baseline ===')
+          mk = MarkovBaseline()
+          mk.fit(train)
+          print(mk.evaluate(test, k=[5, 10, 20]))
+          "
+
+      - name: Train tiny GRU4Rec model
+        run: |
+          python scripts/run_gru4rec.py train \
+            --data data/train.tsv \
+            --model results/model_tiny.pt \
+            --layers 32 \
+            --epochs 2 \
+            --batch_size 16 \
+            --device cpu
+
+      - name: Evaluate model
+        run: |
+          python scripts/run_gru4rec.py eval \
+            --model results/model_tiny.pt \
+            --test data/test.tsv \
+            --cutoffs 5 10 20 \
+            --device cpu
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check syntax
+        run: |
+          python -m py_compile scripts/*.py
+          python -m py_compile src/*.py
+          python -m py_compile src/baselines/*.py

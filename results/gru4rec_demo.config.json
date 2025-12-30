@@ -1,0 +1,8 @@
+{
+  "data": "/home/ozz/projects/Modulos/SistemasRecomendadores/gru4rec-reproduction-study/data/train.tsv",
+  "layers": 64,
+  "batch_size": 32,
+  "epochs": 5,
+  "loss": "cross-entropy",
+  "device": "cpu"
+}
