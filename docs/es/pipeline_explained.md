@@ -9,6 +9,10 @@
 
 Este documento explica como funciona el pipeline de prediccion de GRU4Rec, desde datos crudos de sesiones hasta recomendaciones ordenadas.
 
+<p align="center">
+  <img src="../../figures/pipeline.png" alt="Vista General del Pipeline" width="100%">
+</p>
+
 ---
 
 ## 1. Pipeline de Flujo de Datos
@@ -78,6 +82,10 @@ Este documento explica como funciona el pipeline de prediccion de GRU4Rec, desde
 ---
 
 ## 2. Pasada Forward de GRU4Rec
+
+<p align="center">
+  <img src="../../figures/architecture.png" alt="Arquitectura GRU4Rec" width="70%">
+</p>
 
 ### 2.1 Codificacion de Sesion
 

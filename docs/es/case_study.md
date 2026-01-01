@@ -19,20 +19,14 @@ Este caso de estudio documenta el desarrollo end-to-end de un pipeline de invest
 
 Las plataformas de comercio electronico pierden ingresos significativos cuando no pueden personalizar la experiencia para usuarios anonimos:
 
-```
-┌─────────────────────────────────────────────────────────┐
-│           El Problema del Usuario Anonimo                │
-├─────────────────────────────────────────────────────────┤
-│                                                          │
-│   70-80% de visitantes de e-commerce son anonimos       │
-│                                                          │
-│   Usuarios anonimos convierten al 1-2%                  │
-│   vs. usuarios recurrentes al 3-5%                      │
-│                                                          │
-│   Perdida potencial de ingresos: 20-40% del GMV total  │
-│                                                          │
-└─────────────────────────────────────────────────────────┘
-```
+<p align="center">
+  <img src="../../figures/problem_statement.png" alt="El Problema del Usuario Anonimo" width="90%">
+</p>
+
+**Estadisticas Clave:**
+- 70-80% de visitantes de e-commerce son anonimos
+- Usuarios anonimos convierten al 1-2% vs. usuarios recurrentes al 3-5%
+- Perdida potencial de ingresos: 20-40% del GMV total
 
 ### 1.2 Desafio Tecnico
 
@@ -62,39 +56,17 @@ Las **recomendaciones basadas en sesiones** deben funcionar con:
 
 ### 2.1 Arquitectura de Alto Nivel
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                 Estudio de Reproducibilidad GRU4Rec                  │
-│                     Arquitectura del Sistema                         │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐          │
-│  │ Datos Crudos │    │Preprocesador │    │  Modelos     │          │
-│  │   (TSV)      │───▶│  (Division   │───▶│Entrenamiento │          │
-│  │              │    │  Temporal)   │    │              │          │
-│  └──────────────┘    └──────────────┘    └──────────────┘          │
-│         │                   │                   │                    │
-│         ▼                   ▼                   ▼                    │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐          │
-│  │ SessionId    │    │ Train: 80%   │    │ GRU4Rec      │          │
-│  │ ItemId       │    │ Test:  20%   │    │ Popularidad  │          │
-│  │ Timestamp    │    │ (Temporal)   │    │ Markov       │          │
-│  └──────────────┘    └──────────────┘    └──────────────┘          │
-│                                                 │                    │
-│                                                 ▼                    │
-│                            ┌──────────────────────────────┐         │
-│                            │       Evaluacion             │         │
-│                            │  ┌─────────┬─────────┐      │         │
-│                            │  │Recall@K │ MRR@K   │      │         │
-│                            │  │ @5,10,20│ @5,10,20│      │         │
-│                            │  └─────────┴─────────┘      │         │
-│                            │    (Ranking Completo)       │         │
-│                            └──────────────────────────────┘         │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+<p align="center">
+  <img src="../../figures/pipeline.png" alt="Vista General del Pipeline" width="100%">
+</p>
 
-### 2.2 Stack Tecnologico
+### 2.2 Arquitectura GRU4Rec
+
+<p align="center">
+  <img src="../../figures/architecture.png" alt="Arquitectura GRU4Rec" width="70%">
+</p>
+
+### 2.3 Stack Tecnologico
 
 | Capa | Tecnologia | Proposito |
 |------|------------|-----------|
@@ -112,25 +84,31 @@ Las **recomendaciones basadas en sesiones** deben funcionar con:
 
 ### 3.1 Resultados Cuantitativos
 
-```
-============================================================
-           Resultados de Comparacion de Baselines
-============================================================
-Metrica           Popularidad       Markov
-------------------------------------------------------------
-Recall@5              0.1867       0.1190
-Recall@10             0.2632       0.1817
-Recall@20             0.3428       0.2778
-MRR@5                 0.1172       0.0737
-MRR@10                0.1271       0.0816
-MRR@20                0.1324       0.0881
-============================================================
+<p align="center">
+  <img src="../../figures/model_comparison.png" alt="Comparacion de Modelos" width="100%">
+</p>
 
-Entrenamiento GRU4Rec:
-  - Reduccion de perdida: 7.15 → 6.50 (9% mejora en 5 epocas)
-  - Tiempo de entrenamiento: 7.94s en CPU
-  - Tamano del modelo: 77MB
-```
+<p align="center">
+  <img src="../../figures/recall_curves.png" alt="Curvas Recall@K" width="80%">
+</p>
+
+| Metrica | Popularidad | Markov |
+|---------|-------------|--------|
+| Recall@5 | 0.1867 | 0.1190 |
+| Recall@10 | 0.2632 | 0.1817 |
+| Recall@20 | 0.3428 | 0.2778 |
+| MRR@5 | 0.1172 | 0.0737 |
+| MRR@10 | 0.1271 | 0.0816 |
+| MRR@20 | 0.1324 | 0.0881 |
+
+**Entrenamiento GRU4Rec:**
+- Reduccion de perdida: 7.15 → 6.50 (9% mejora en 5 epocas)
+- Tiempo de entrenamiento: 7.94s en CPU
+- Tamano del modelo: 77MB
+
+<p align="center">
+  <img src="../../figures/training_curve.png" alt="Curva de Entrenamiento" width="70%">
+</p>
 
 ### 3.2 Hallazgos Clave
 

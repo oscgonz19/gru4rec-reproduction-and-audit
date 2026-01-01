@@ -34,6 +34,105 @@ The official GRU4Rec PyTorch implementation by [Balazs Hidasi](https://github.co
 
 ---
 
+## The Problem We Solve
+
+<p align="center">
+  <img src="figures/problem_statement.png" alt="The Anonymous User Problem" width="90%">
+</p>
+
+**70-80% of e-commerce visitors are anonymous.** Traditional recommendation systems fail because they require user history. Session-based recommendations solve this by predicting the next item based only on the current browsing session.
+
+<p align="center">
+  <img src="figures/solution_comparison.png" alt="Traditional vs Session-Based" width="90%">
+</p>
+
+---
+
+## GRU4Rec Architecture
+
+<p align="center">
+  <img src="figures/architecture.png" alt="GRU4Rec Architecture" width="70%">
+</p>
+
+**GRU4Rec** uses Gated Recurrent Units to learn sequential patterns in browsing behavior:
+
+| Aspect | Detail |
+|--------|--------|
+| **Paper** | "Session-based Recommendations with RNNs" (ICLR 2016) |
+| **Citations** | 1,500+ in academic literature |
+| **Author** | Balazs Hidasi (Gravity R&D) |
+| **Adoption** | Used in production by major e-commerce platforms |
+
+---
+
+## Pipeline Overview
+
+<p align="center">
+  <img src="figures/pipeline.png" alt="Pipeline Overview" width="100%">
+</p>
+
+```bash
+# Complete demo in 30 seconds
+make fetch        # Clone official GRU4Rec (not redistributed)
+make synth_data   # Generate synthetic data
+make preprocess   # Temporal split without data leakage
+make baselines    # Run Popularity + Markov baselines
+make visualize    # Generate all figures
+```
+
+---
+
+## Results
+
+<p align="center">
+  <img src="figures/model_comparison.png" alt="Model Comparison" width="100%">
+</p>
+
+### Performance Metrics
+
+<p align="center">
+  <img src="figures/recall_curves.png" alt="Recall@K Curves" width="80%">
+</p>
+
+<p align="center">
+  <img src="figures/mrr_curves.png" alt="MRR@K Curves" width="80%">
+</p>
+
+### Training Progress
+
+<p align="center">
+  <img src="figures/training_curve.png" alt="Training Curve" width="70%">
+</p>
+
+---
+
+## Data Exploration
+
+<p align="center">
+  <img src="figures/session_lengths.png" alt="Session Length Distribution" width="80%">
+</p>
+
+<p align="center">
+  <img src="figures/item_popularity.png" alt="Item Popularity Distribution" width="100%">
+</p>
+
+---
+
+## Evaluation Protocol
+
+<p align="center">
+  <img src="figures/evaluation_protocol.png" alt="Evaluation Protocol" width="100%">
+</p>
+
+We use **full ranking** (score ALL items), not sampled negatives:
+
+| Evaluation Type | Typical Recall@20 | Reality |
+|-----------------|-------------------|---------|
+| Sampled (100 neg) | ~80% | **Inflated 2-3x** |
+| Full ranking | ~35% | **Realistic** |
+
+---
+
 ## Documentation / Documentacion
 
 | Document | English | Espanol | Audience |
@@ -46,330 +145,133 @@ The official GRU4Rec PyTorch implementation by [Balazs Hidasi](https://github.co
 
 ---
 
-## Visualizations
-
-Generate publication-quality figures with `make visualize`:
-
-<p align="center">
-  <img src="figures/model_comparison.png" alt="Model Comparison" width="80%">
-</p>
-
-<p align="center">
-  <em>Model Performance Comparison: Popularity vs Markov vs GRU4Rec</em>
-</p>
-
-| Visualization | Description |
-|---------------|-------------|
-| `model_comparison.png` | Bar charts comparing all models |
-| `recall_curves.png` | Recall@K curves by model |
-| `mrr_curves.png` | MRR@K curves by model |
-| `training_curve.png` | GRU4Rec loss over epochs |
-| `session_lengths.png` | Distribution of session lengths |
-| `item_popularity.png` | Long-tail item distribution |
-| `architecture.png` | GRU4Rec architecture diagram |
-| `pipeline.png` | End-to-end pipeline overview |
-| `problem_statement.png` | The anonymous user problem |
-| `solution_comparison.png` | Traditional vs session-based |
-| `evaluation_protocol.png` | Sampled vs full ranking |
-
-All figures are saved in both PNG and SVG formats for publications.
-
----
-
-## El Problema que Resuelve
-
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                    EL PROBLEMA DEL USUARIO ANONIMO                       │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                          │
-│   En e-commerce y plataformas digitales:                                │
-│                                                                          │
-│   ┌─────────────────────────────────────────────────────────┐           │
-│   │  70-80% de visitantes son ANONIMOS o primera visita     │           │
-│   └─────────────────────────────────────────────────────────┘           │
-│                                                                          │
-│   Los sistemas de recomendacion tradicionales FALLAN porque:            │
-│   ✗ Requieren historial de usuario (semanas/meses)                      │
-│   ✗ Necesitan identificacion (login, cookies)                           │
-│   ✗ Dependen de ratings explicitos                                      │
-│                                                                          │
-│   Impacto: Perdida de 20-40% de conversiones potenciales                │
-│                                                                          │
-└─────────────────────────────────────────────────────────────────────────┘
-```
-
-### La Solucion: Recomendaciones Basadas en Sesion
-
-**Session-based recommendations** predicen el siguiente item que un usuario quiere basandose UNICAMENTE en su sesion actual de navegacion, sin requerir historial ni identificacion.
-
-```
-Metodo Tradicional:
-  "Usuario hizo clic en zapatos" → Recomendar zapatos
-
-GRU4Rec (Session-based):
-  "Usuario vio zapatillas running → agrego al carrito →
-   miro calcetines → vio botellas de agua"
-   → Recomendar: gear de running, accesorios fitness
-```
-
----
-
-## Que es GRU4Rec?
-
-**GRU4Rec** es un modelo de deep learning que usa **Redes Neuronales Recurrentes con Compuertas (GRU)** para aprender patrones secuenciales en el comportamiento de navegacion.
-
-| Aspecto | Detalle |
-|---------|---------|
-| **Paper** | "Session-based Recommendations with RNNs" (ICLR 2016) |
-| **Citaciones** | 1,500+ en literatura academica |
-| **Autor** | Balazs Hidasi (Gravity R&D) |
-| **Adopcion** | Usado en produccion por grandes plataformas e-commerce |
-
-### Arquitectura Visual
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                  ARQUITECTURA GRU4Rec                        │
-├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│   Sesion: [zapato, calcetin, botella, ?]                    │
-│              │        │         │                            │
-│              ▼        ▼         ▼                            │
-│   ┌──────────────────────────────────────┐                  │
-│   │         EMBEDDING LAYER              │                  │
-│   │    Convierte items en vectores       │                  │
-│   └──────────────────────────────────────┘                  │
-│              │        │         │                            │
-│              ▼        ▼         ▼                            │
-│   ┌──────────────────────────────────────┐                  │
-│   │           GRU LAYERS                 │                  │
-│   │   Aprende patrones secuenciales      │                  │
-│   │   h_t = GRU(h_{t-1}, x_t)           │                  │
-│   └──────────────────────────────────────┘                  │
-│                       │                                      │
-│                       ▼                                      │
-│   ┌──────────────────────────────────────┐                  │
-│   │         OUTPUT LAYER                 │                  │
-│   │   Score para cada item del catalogo  │                  │
-│   └──────────────────────────────────────┘                  │
-│                       │                                      │
-│                       ▼                                      │
-│   Prediccion: [item_234, item_89, item_42, ...]             │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
-
-## Que Ofrece Este Repositorio?
-
-### Pipeline Reproducible Completo
-
-```bash
-# En 30 segundos tienes resultados
-make fetch        # Clona GRU4Rec oficial (no redistribuimos codigo)
-make synth_data   # Genera datos sinteticos
-make preprocess   # Split temporal sin data leakage
-make baselines    # Ejecuta Popularity + Markov
-```
-
-### Baselines Implementados
-
-| Modelo | Descripcion | Complejidad |
-|--------|-------------|-------------|
-| **Popularity** | Recomienda items mas populares | O(1) prediccion |
-| **Markov Chain** | Predice basado en ultimo item | O(k log k) prediccion |
-| **GRU4Rec** | Deep learning sobre secuencia completa | O(T·H² + H·V) |
-
-### Evaluacion Rigurosa
-
-Usamos **full ranking** (puntuar TODOS los items), no negativos muestreados:
-
-| Tipo Evaluacion | Recall@20 Tipico | Realidad |
-|-----------------|------------------|----------|
-| Muestreada (100 neg) | ~80% | **Inflado 2-3x** |
-| Full ranking | ~35% | **Realista** |
-
----
-
-## Resultados de Demo
-
-```
-============================================================
-           GRU4Rec Reproduction Study - Demo
-============================================================
-
-[1/4] Generating synthetic session data...
-      Generated 11,222 events, 1,000 sessions, 499 items
-
-[2/4] Preprocessing with temporal split...
-      Train: 8,837 events, 800 sessions
-      Test:  2,385 events, 200 sessions
-
-[3/4] Running baselines...
-
-[4/4] Results
-============================================================
-Metric            Popularity       Markov
-------------------------------------------------------------
-Recall@5              0.1867       0.1190
-Recall@10             0.2632       0.1817
-Recall@20             0.3428       0.2778
-MRR@5                 0.1172       0.0737
-MRR@10                0.1271       0.0816
-MRR@20                0.1324       0.0881
-============================================================
-
-GRU4Rec Training (5 epochs):
-  Loss: 7.15 → 6.50 (↓9% mejora)
-  Tiempo: 7.94s (CPU)
-```
-
----
-
 ## Quick Start
 
-### Opcion 1: Conda (Recomendado)
+### Option 1: Conda (Recommended)
 
 ```bash
-# Clonar
+# Clone
 git clone https://github.com/oscgonz19/gru4rec-reproduction-and-audit.git
 cd gru4rec-reproduction-and-audit
 
-# Crear entorno
+# Create environment
 conda env create -f environment.yml
 conda activate gru4rec-study
 
-# Ejecutar demo completa
-make fetch synth_data preprocess baselines
+# Run complete demo with visualizations
+make demo
 ```
 
-### Opcion 2: pip
+### Option 2: pip
 
 ```bash
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-make ci
+make fetch synth_data preprocess baselines
 ```
 
 ---
 
-## Casos de Uso
+## Available Commands
 
-### Cuando Usar GRU4Rec
+```bash
+# Data pipeline
+make synth_data     # Generate synthetic data
+make preprocess     # Temporal train/test split
 
-| Escenario | Recomendacion |
-|-----------|---------------|
-| E-commerce con patrones de navegacion complejos | **GRU4Rec** |
-| Plataformas de contenido secuencial | **GRU4Rec** |
-| Datos limitados o cold-start | Popularity baseline |
-| Latencia <10ms requerida | Markov o Popularity |
-| Recursos computacionales limitados | Baselines |
+# Models
+make fetch          # Clone official GRU4Rec
+make train_tiny     # Train small model
+make baselines      # Run baselines
 
-### ROI Esperado
+# Visualization
+make visualize      # Generate all figures
+make demo           # Full demo with visualizations
 
-| Comparacion | Mejora Esperada en CTR |
-|-------------|------------------------|
-| GRU4Rec vs Popularity baseline | 10-30% |
-| GRU4Rec vs sin recomendaciones | 200-400% |
+# Utilities
+make test           # Run pytest (18 tests)
+make ci             # Full CI pipeline
+make clean          # Clean generated files
+make help           # Show all commands
+```
 
 ---
 
-## Estructura del Proyecto
+## Project Structure
 
 ```
 gru4rec-reproduction-and-audit/
 │
-├── docs/                          # 10 documentos (5 EN + 5 ES)
+├── docs/                          # 10 documents (5 EN + 5 ES)
 │   ├── en/                        # English documentation
-│   └── es/                        # Documentacion en espanol
+│   └── es/                        # Spanish documentation
+│
+├── figures/                       # 11 publication-quality visualizations
+│   ├── model_comparison.png       # Model performance comparison
+│   ├── recall_curves.png          # Recall@K by model
+│   ├── architecture.png           # GRU4Rec architecture
+│   └── ...                        # And more
 │
 ├── scripts/                       # Pipeline automation
-│   ├── fetch_official.py          # Clona GRU4Rec oficial
-│   ├── make_synth_data.py         # Genera datos sinteticos
-│   ├── preprocess_sessions.py     # Split temporal
-│   └── run_gru4rec.py             # Wrapper de entrenamiento
+│   ├── fetch_official.py          # Clone official GRU4Rec
+│   ├── make_synth_data.py         # Generate synthetic data
+│   ├── preprocess_sessions.py     # Temporal split
+│   ├── run_gru4rec.py             # Training wrapper
+│   └── generate_visualizations.py # Figure generation
 │
-├── src/                           # Codigo fuente
+├── src/                           # Source code
 │   ├── baselines/
-│   │   ├── popularity.py          # Baseline de popularidad
-│   │   └── markov.py              # Baseline Markov
+│   │   ├── popularity.py          # Popularity baseline
+│   │   └── markov.py              # Markov chain baseline
 │   ├── metrics.py                 # Recall@K, MRR@K, NDCG@K
-│   └── report.py                  # Visualizaciones
+│   ├── visualizations.py          # Plotting module
+│   └── report.py                  # Report generation
 │
 ├── tests/                         # 18 unit tests
-│   ├── test_baselines.py
-│   └── test_metrics.py
-│
-├── data/                          # Datos (gitignored)
-├── results/                       # Modelos (gitignored)
-├── vendor/                        # GRU4Rec oficial (gitignored)
 │
 ├── environment.yml                # Conda environment
 ├── requirements.txt               # Pip requirements
+├── pyproject.toml                 # Project configuration
 ├── Makefile                       # Build automation
 └── .github/workflows/ci.yml       # GitHub Actions
 ```
 
 ---
 
-## Comandos Disponibles
+## Key Findings
 
-```bash
-# Pipeline de datos
-make synth_data     # Generar datos sinteticos
-make preprocess     # Split temporal train/test
+### 1. Baselines Are Competitive
+Simple popularity methods achieve **60-70%** of neural network performance at a fraction of the computational cost.
 
-# Modelos
-make fetch          # Clonar GRU4Rec oficial
-make train_tiny     # Entrenar modelo pequeno
-make baselines      # Ejecutar baselines
+### 2. Evaluation Protocol Matters
+Sampled evaluation can **overestimate performance by 2-3x**, leading to poor production decisions.
 
-# Utilidades
-make test           # Ejecutar pytest (18 tests)
-make ci             # Pipeline completo de CI
-make clean          # Limpiar archivos generados
-make help           # Ver todos los comandos
-```
+### 3. Sequential Patterns Unlock Value
+GRU4Rec excels when there are meaningful sequential patterns (browsing → comparison → purchase).
 
 ---
 
-## Formato de Datos
+## When to Use Each Model
 
-Archivos TSV con tres columnas:
+| Scenario | Recommendation |
+|----------|----------------|
+| E-commerce with complex browsing patterns | **GRU4Rec** |
+| Sequential content platforms | **GRU4Rec** |
+| Limited data or cold-start | Popularity baseline |
+| Latency <10ms required | Markov or Popularity |
+| Resource-constrained environments | Baselines |
 
-```
-SessionId    ItemId    Time
-1            42        1609459200
-1            17        1609459210
-1            89        1609459220
-2            42        1609459300
-```
+### Expected ROI
 
-| Columna | Descripcion |
-|---------|-------------|
-| `SessionId` | Identificador unico de sesion |
-| `ItemId` | Identificador de item |
-| `Time` | Unix timestamp (para ordenamiento) |
-
----
-
-## Key Findings / Hallazgos Clave
-
-### 1. Los Baselines Son Competitivos
-Los metodos simples de popularidad logran **60-70%** del rendimiento de redes neuronales con una fraccion del costo computacional.
-
-### 2. El Protocolo de Evaluacion Importa
-La evaluacion muestreada puede **sobreestimar el rendimiento 2-3x**, llevando a malas decisiones de produccion.
-
-### 3. Los Patrones Secuenciales Desbloquean Valor
-GRU4Rec sobresale cuando hay patrones secuenciales significativos (navegacion → comparacion → compra).
+| Comparison | Expected CTR Improvement |
+|------------|--------------------------|
+| GRU4Rec vs Popularity baseline | 10-30% |
+| GRU4Rec vs no recommendations | 200-400% |
 
 ---
 
-## Referencias
+## References
 
 1. Hidasi, B., et al. (2016). **Session-based Recommendations with Recurrent Neural Networks**. ICLR 2016.
 
@@ -379,21 +281,21 @@ GRU4Rec sobresale cuando hay patrones secuenciales significativos (navegacion �
 
 ---
 
-## Licencia
+## License
 
-- **Mis contribuciones** (pipeline, baselines, scripts, documentacion): MIT License
-- **GRU4Rec oficial** (en `vendor/`): Libre para investigacion y educacion; contactar autor para uso comercial
+- **My contributions** (pipeline, baselines, scripts, documentation, visualizations): MIT License
+- **Official GRU4Rec** (in `vendor/`): Free for research/education; contact author for commercial use
 
 ---
 
-## Autor
+## Author
 
 **Oscar Gonzalez**
 
-*Este proyecto demuestra competencias en deep learning, sistemas de recomendacion y practicas de investigacion reproducible.*
+*This project demonstrates competencies in deep learning, recommendation systems, data visualization, and reproducible research practices.*
 
 ---
 
 <p align="center">
-  <b>Si este proyecto te es util, considera darle una estrella en GitHub</b>
+  <b>If you find this project useful, consider giving it a star on GitHub!</b>
 </p>

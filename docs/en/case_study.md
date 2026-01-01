@@ -17,22 +17,16 @@ This case study documents the end-to-end development of a reproducible research 
 
 ### 1.1 Business Context
 
-E-commerce platforms lose significant revenue when they cannot personalize the experience for anonymous users. Consider these industry statistics:
+E-commerce platforms lose significant revenue when they cannot personalize the experience for anonymous users:
 
-```
-┌─────────────────────────────────────────────────────────┐
-│              The Anonymous User Problem                  │
-├─────────────────────────────────────────────────────────┤
-│                                                          │
-│   70-80% of e-commerce visitors are anonymous            │
-│                                                          │
-│   Anonymous users convert at 1-2%                        │
-│   vs. returning users at 3-5%                            │
-│                                                          │
-│   Potential revenue loss: 20-40% of total GMV           │
-│                                                          │
-└─────────────────────────────────────────────────────────┘
-```
+<p align="center">
+  <img src="../../figures/problem_statement.png" alt="The Anonymous User Problem" width="90%">
+</p>
+
+**Key Statistics:**
+- 70-80% of e-commerce visitors are anonymous
+- Anonymous users convert at 1-2% vs. returning users at 3-5%
+- Potential revenue loss: 20-40% of total GMV
 
 ### 1.2 Technical Challenge
 
@@ -62,40 +56,17 @@ Traditional recommendation systems require:
 
 ### 2.1 High-Level Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                    GRU4Rec Reproduction Study                        │
-│                       System Architecture                            │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐          │
-│  │   Raw Data   │    │  Preprocessor │    │   Models     │          │
-│  │   (TSV)      │───▶│  (Temporal    │───▶│  Training    │          │
-│  │              │    │   Split)      │    │              │          │
-│  └──────────────┘    └──────────────┘    └──────────────┘          │
-│         │                   │                   │                    │
-│         │                   │                   │                    │
-│         ▼                   ▼                   ▼                    │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐          │
-│  │ SessionId    │    │ Train: 80%   │    │ GRU4Rec      │          │
-│  │ ItemId       │    │ Test:  20%   │    │ Popularity   │          │
-│  │ Timestamp    │    │ (Temporal)   │    │ Markov       │          │
-│  └──────────────┘    └──────────────┘    └──────────────┘          │
-│                                                 │                    │
-│                                                 ▼                    │
-│                            ┌──────────────────────────────┐         │
-│                            │       Evaluation             │         │
-│                            │  ┌─────────┬─────────┐      │         │
-│                            │  │Recall@K │ MRR@K   │      │         │
-│                            │  │ @5,10,20│ @5,10,20│      │         │
-│                            │  └─────────┴─────────┘      │         │
-│                            │    (Full Ranking)           │         │
-│                            └──────────────────────────────┘         │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+<p align="center">
+  <img src="../../figures/pipeline.png" alt="Pipeline Overview" width="100%">
+</p>
 
-### 2.2 Technology Stack
+### 2.2 GRU4Rec Architecture
+
+<p align="center">
+  <img src="../../figures/architecture.png" alt="GRU4Rec Architecture" width="70%">
+</p>
+
+### 2.3 Technology Stack
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -230,6 +201,10 @@ class MarkovBaseline:
 
 **Objective:** Implement rigorous evaluation protocol with full ranking.
 
+<p align="center">
+  <img src="../../figures/evaluation_protocol.png" alt="Evaluation Protocol" width="100%">
+</p>
+
 **Key Insight:** Many academic papers use "sampled evaluation" (100 random negatives), which inflates metrics by 2-3x. We implemented full ranking for realistic estimates.
 
 ```python
@@ -264,25 +239,31 @@ def evaluate(model, test_df, k=[5, 10, 20]):
 
 ### 4.1 Quantitative Results
 
-```
-============================================================
-              Baseline Comparison Results
-============================================================
-Metric            Popularity       Markov
-------------------------------------------------------------
-Recall@5              0.1867       0.1190
-Recall@10             0.2632       0.1817
-Recall@20             0.3428       0.2778
-MRR@5                 0.1172       0.0737
-MRR@10                0.1271       0.0816
-MRR@20                0.1324       0.0881
-============================================================
+<p align="center">
+  <img src="../../figures/model_comparison.png" alt="Model Comparison" width="100%">
+</p>
 
-GRU4Rec Training:
-  - Loss reduction: 7.15 → 6.50 (9% improvement in 5 epochs)
-  - Training time: 7.94s on CPU
-  - Model size: 77MB
-```
+<p align="center">
+  <img src="../../figures/recall_curves.png" alt="Recall@K Curves" width="80%">
+</p>
+
+| Metric | Popularity | Markov |
+|--------|------------|--------|
+| Recall@5 | 0.1867 | 0.1190 |
+| Recall@10 | 0.2632 | 0.1817 |
+| Recall@20 | 0.3428 | 0.2778 |
+| MRR@5 | 0.1172 | 0.0737 |
+| MRR@10 | 0.1271 | 0.0816 |
+| MRR@20 | 0.1324 | 0.0881 |
+
+**GRU4Rec Training:**
+- Loss reduction: 7.15 → 6.50 (9% improvement in 5 epochs)
+- Training time: 7.94s on CPU
+- Model size: 77MB
+
+<p align="center">
+  <img src="../../figures/training_curve.png" alt="Training Curve" width="70%">
+</p>
 
 ### 4.2 Key Findings
 

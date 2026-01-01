@@ -9,6 +9,10 @@
 
 This document explains how the GRU4Rec prediction pipeline works, from raw session data to ranked recommendations.
 
+<p align="center">
+  <img src="../../figures/pipeline.png" alt="Pipeline Overview" width="100%">
+</p>
+
 ---
 
 ## 1. Data Flow Pipeline
@@ -87,6 +91,10 @@ This document explains how the GRU4Rec prediction pipeline works, from raw sessi
 ---
 
 ## 2. GRU4Rec Forward Pass
+
+<p align="center">
+  <img src="../../figures/architecture.png" alt="GRU4Rec Architecture" width="70%">
+</p>
 
 ### 2.1 Session Encoding
 
