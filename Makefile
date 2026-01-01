@@ -1,4 +1,4 @@
-.PHONY: all fetch synth_data preprocess train_tiny eval_tiny test clean help
+.PHONY: all fetch synth_data preprocess train_tiny eval_tiny test clean help visualize demo
 
 PYTHON ?= python3
 DEVICE ?= cpu
@@ -52,6 +52,15 @@ baselines:
 report:
 	$(PYTHON) src/report.py --results_dir results --output results/comparison.png
 
+# Generate all visualizations
+visualize:
+	$(PYTHON) scripts/generate_visualizations.py --output figures/
+
+# Full demo with visualizations
+demo: synth_data preprocess baselines visualize
+	@echo ""
+	@echo "Demo completed! Check figures/ for visualizations."
+
 # Run tests
 test:
 	$(PYTHON) -m pytest tests/ -v
@@ -79,6 +88,8 @@ help:
 	@echo "  train_tiny   Train a small model for testing"
 	@echo "  eval_tiny    Evaluate the tiny model"
 	@echo "  baselines    Run popularity and Markov baselines"
+	@echo "  visualize    Generate all figures in figures/"
+	@echo "  demo         Full demo with visualizations"
 	@echo "  report       Generate comparison report"
 	@echo "  test         Run pytest"
 	@echo "  ci           Full CI pipeline"

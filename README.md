@@ -22,6 +22,7 @@
 - Temporal train/test split without data leakage
 - Production-ready baselines: Popularity and First-order Markov Chain
 - Evaluation module with Recall@K, MRR@K, NDCG@K
+- **11 publication-quality visualizations** for storytelling
 - Bilingual documentation (10 documents in EN/ES)
 - GitHub Actions CI workflow
 
@@ -42,6 +43,36 @@ The official GRU4Rec PyTorch implementation by [Balazs Hidasi](https://github.co
 | **Technical Report** | [technical_report.md](docs/en/technical_report.md) | [technical_report.md](docs/es/technical_report.md) | Engineers |
 | **Pipeline Explained** | [pipeline_explained.md](docs/en/pipeline_explained.md) | [pipeline_explained.md](docs/es/pipeline_explained.md) | Data Scientists |
 | **Mathematical Formulas** | [mathematical_formulas.md](docs/en/mathematical_formulas.md) | [mathematical_formulas.md](docs/es/mathematical_formulas.md) | Researchers |
+
+---
+
+## Visualizations
+
+Generate publication-quality figures with `make visualize`:
+
+<p align="center">
+  <img src="figures/model_comparison.png" alt="Model Comparison" width="80%">
+</p>
+
+<p align="center">
+  <em>Model Performance Comparison: Popularity vs Markov vs GRU4Rec</em>
+</p>
+
+| Visualization | Description |
+|---------------|-------------|
+| `model_comparison.png` | Bar charts comparing all models |
+| `recall_curves.png` | Recall@K curves by model |
+| `mrr_curves.png` | MRR@K curves by model |
+| `training_curve.png` | GRU4Rec loss over epochs |
+| `session_lengths.png` | Distribution of session lengths |
+| `item_popularity.png` | Long-tail item distribution |
+| `architecture.png` | GRU4Rec architecture diagram |
+| `pipeline.png` | End-to-end pipeline overview |
+| `problem_statement.png` | The anonymous user problem |
+| `solution_comparison.png` | Traditional vs session-based |
+| `evaluation_protocol.png` | Sampled vs full ranking |
+
+All figures are saved in both PNG and SVG formats for publications.
 
 ---
 
