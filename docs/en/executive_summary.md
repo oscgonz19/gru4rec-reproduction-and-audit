@@ -203,8 +203,8 @@ make ci  # Runs full pipeline: data → train → evaluate
 
 ```bash
 # Setup
-git clone https://github.com/YOUR_USERNAME/gru4rec-reproduction-study.git
-cd gru4rec-reproduction-study
+git clone https://github.com/oscgonz19/gru4rec-reproduction-and-audit.git
+cd gru4rec-reproduction-and-audit
 conda env create -f environment.yml
 conda activate gru4rec-study
 
@@ -224,7 +224,7 @@ make baselines    # Run baseline models
 For questions about this study or collaboration opportunities:
 
 **Author:** Oscar Gonzalez
-**Project:** [github.com/YOUR_USERNAME/gru4rec-reproduction-study](https://github.com/YOUR_USERNAME/gru4rec-reproduction-study)
+**Project:** [github.com/oscgonz19/gru4rec-reproduction-and-audit](https://github.com/oscgonz19/gru4rec-reproduction-and-audit)
 
 ---
 

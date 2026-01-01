@@ -389,8 +389,8 @@ The resulting repository serves as both a research tool and a portfolio piece de
 
 ```bash
 # Clone and setup
-git clone https://github.com/YOUR_USERNAME/gru4rec-reproduction-study.git
-cd gru4rec-reproduction-study
+git clone https://github.com/oscgonz19/gru4rec-reproduction-and-audit.git
+cd gru4rec-reproduction-and-audit
 conda env create -f environment.yml
 conda activate gru4rec-study
 

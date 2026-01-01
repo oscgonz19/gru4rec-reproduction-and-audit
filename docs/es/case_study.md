@@ -204,8 +204,8 @@ El repositorio resultante sirve tanto como herramienta de investigacion como pie
 
 ```bash
 # Clonar y configurar
-git clone https://github.com/TU_USUARIO/gru4rec-reproduction-study.git
-cd gru4rec-reproduction-study
+git clone https://github.com/oscgonz19/gru4rec-reproduction-and-audit.git
+cd gru4rec-reproduction-and-audit
 conda env create -f environment.yml
 conda activate gru4rec-study
 

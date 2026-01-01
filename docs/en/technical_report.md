@@ -606,8 +606,8 @@ Sampled evaluation can overestimate model performance by 2-3x.
 
 ```bash
 # Clone repository
-git clone https://github.com/YOUR_USERNAME/gru4rec-reproduction-study.git
-cd gru4rec-reproduction-study
+git clone https://github.com/oscgonz19/gru4rec-reproduction-and-audit.git
+cd gru4rec-reproduction-and-audit
 
 # Create conda environment
 conda env create -f environment.yml

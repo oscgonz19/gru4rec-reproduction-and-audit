@@ -606,8 +606,8 @@ La evaluacion muestreada puede sobreestimar el rendimiento del modelo por 2-3x.
 
 ```bash
 # Clonar repositorio
-git clone https://github.com/TU_USUARIO/gru4rec-reproduction-study.git
-cd gru4rec-reproduction-study
+git clone https://github.com/oscgonz19/gru4rec-reproduction-and-audit.git
+cd gru4rec-reproduction-and-audit
 
 # Crear entorno conda
 conda env create -f environment.yml
