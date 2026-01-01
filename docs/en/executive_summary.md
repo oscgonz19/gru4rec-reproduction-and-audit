@@ -13,6 +13,10 @@ This document summarizes a reproduction study of **GRU4Rec**, a state-of-the-art
 
 ## The Business Problem
 
+<p align="center">
+  <img src="../../figures/problem_statement.png" alt="The Anonymous User Problem" width="90%">
+</p>
+
 ### Challenge
 Modern e-commerce and content platforms face a critical challenge: **70-80% of users are anonymous or first-time visitors**. Traditional recommendation systems that rely on user history fail for these users.
 
@@ -23,6 +27,10 @@ Modern e-commerce and content platforms face a critical challenge: **70-80% of u
 
 ### Solution Approach
 **Session-based recommendations** predict what a user wants based only on their current browsing session, without requiring historical data or user identification.
+
+<p align="center">
+  <img src="../../figures/solution_comparison.png" alt="Traditional vs Session-Based" width="90%">
+</p>
 
 ---
 
@@ -84,12 +92,20 @@ We use **full ranking evaluation**, which scores ALL items in the catalog for ea
 
 ### Performance Comparison
 
+<p align="center">
+  <img src="../../figures/model_comparison.png" alt="Model Comparison" width="100%">
+</p>
+
 | Metric | Popularity | Markov | Expected GRU4Rec* |
 |--------|------------|--------|-------------------|
 | Recall@20 | 34.3% | 27.8% | 45-55% |
 | MRR@20 | 13.2% | 8.8% | 18-25% |
 
 *Based on published benchmarks on real-world datasets
+
+<p align="center">
+  <img src="../../figures/recall_curves.png" alt="Recall@K Curves" width="80%">
+</p>
 
 ### Key Insights
 

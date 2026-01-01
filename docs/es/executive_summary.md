@@ -9,6 +9,10 @@ Este documento resume un estudio de reproducibilidad de **GRU4Rec**, un modelo d
 
 ## El Problema de Negocio
 
+<p align="center">
+  <img src="../../figures/problem_statement.png" alt="El Problema del Usuario Anonimo" width="90%">
+</p>
+
 ### Desafio
 Las plataformas modernas de comercio electronico y contenido enfrentan un desafio critico: **70-80% de los usuarios son anonimos o visitantes por primera vez**. Los sistemas de recomendacion tradicionales que dependen del historial de usuario fallan para estos usuarios.
 
@@ -19,6 +23,10 @@ Las plataformas modernas de comercio electronico y contenido enfrentan un desafi
 
 ### Enfoque de Solucion
 Las **recomendaciones basadas en sesiones** predicen lo que un usuario quiere basandose unicamente en su sesion de navegacion actual, sin requerir datos historicos ni identificacion del usuario.
+
+<p align="center">
+  <img src="../../figures/solution_comparison.png" alt="Tradicional vs Basado en Sesion" width="90%">
+</p>
 
 ---
 
@@ -80,12 +88,20 @@ Usamos **evaluacion con ranking completo**, que puntua TODOS los items del catal
 
 ### Comparacion de Rendimiento
 
+<p align="center">
+  <img src="../../figures/model_comparison.png" alt="Comparacion de Modelos" width="100%">
+</p>
+
 | Metrica | Popularidad | Markov | GRU4Rec Esperado* |
 |---------|-------------|--------|-------------------|
 | Recall@20 | 34.3% | 27.8% | 45-55% |
 | MRR@20 | 13.2% | 8.8% | 18-25% |
 
 *Basado en benchmarks publicados en datasets del mundo real
+
+<p align="center">
+  <img src="../../figures/recall_curves.png" alt="Curvas Recall@K" width="80%">
+</p>
 
 ### Insights Clave
 

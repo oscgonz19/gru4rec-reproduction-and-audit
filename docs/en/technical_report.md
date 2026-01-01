@@ -102,6 +102,10 @@ The **update gate** `z_t` controls how much of the previous state to retain, whi
 
 ### 2.4 GRU4Rec Architecture
 
+<p align="center">
+  <img src="../../figures/architecture.png" alt="GRU4Rec Architecture" width="70%">
+</p>
+
 GRU4Rec applies GRUs to session-based recommendation:
 
 ```
@@ -224,6 +228,10 @@ gru4rec-reproduction-study/
 ```
 
 ### 3.2 Data Flow
+
+<p align="center">
+  <img src="../../figures/pipeline.png" alt="Pipeline Overview" width="100%">
+</p>
 
 ```
 ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
@@ -476,6 +484,10 @@ item_weights = 1.0 / np.arange(1, n_items + 1) ** 0.8
 
 ### 7.1 Baseline Comparison
 
+<p align="center">
+  <img src="../../figures/model_comparison.png" alt="Model Comparison" width="100%">
+</p>
+
 | Metric | Popularity | Markov |
 |--------|------------|--------|
 | Recall@5 | **0.1867** | 0.1190 |
@@ -484,6 +496,14 @@ item_weights = 1.0 / np.arange(1, n_items + 1) ** 0.8
 | MRR@5 | **0.1172** | 0.0737 |
 | MRR@10 | **0.1271** | 0.0816 |
 | MRR@20 | **0.1324** | 0.0881 |
+
+<p align="center">
+  <img src="../../figures/recall_curves.png" alt="Recall@K Curves" width="80%">
+</p>
+
+<p align="center">
+  <img src="../../figures/mrr_curves.png" alt="MRR@K Curves" width="80%">
+</p>
 
 **Observations:**
 
@@ -497,6 +517,10 @@ item_weights = 1.0 / np.arange(1, n_items + 1) ** 0.8
 3. **Performance increases with K** as expected, with diminishing returns.
 
 ### 7.2 GRU4Rec Training
+
+<p align="center">
+  <img src="../../figures/training_curve.png" alt="Training Curve" width="80%">
+</p>
 
 ```
 Training Progress:
@@ -521,6 +545,10 @@ The synthetic data generator creates items following a power-law distribution, w
 #### Evaluation Protocol Importance
 
 Using **full ranking** (scoring all items) instead of sampled negatives is crucial:
+
+<p align="center">
+  <img src="../../figures/evaluation_protocol.png" alt="Evaluation Protocol Comparison" width="100%">
+</p>
 
 | Evaluation Type | Recall@20 (typical) | Reality |
 |-----------------|---------------------|---------|

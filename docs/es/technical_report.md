@@ -102,6 +102,10 @@ La **compuerta de actualizacion** `z_t` controla cuanto del estado anterior rete
 
 ### 2.4 Arquitectura de GRU4Rec
 
+<p align="center">
+  <img src="../../figures/architecture.png" alt="Arquitectura GRU4Rec" width="70%">
+</p>
+
 GRU4Rec aplica GRUs a la recomendacion basada en sesiones:
 
 ```
@@ -224,6 +228,10 @@ gru4rec-reproduction-study/
 ```
 
 ### 3.2 Flujo de Datos
+
+<p align="center">
+  <img src="../../figures/pipeline.png" alt="Vista General del Pipeline" width="100%">
+</p>
 
 ```
 ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
@@ -476,6 +484,10 @@ item_weights = 1.0 / np.arange(1, n_items + 1) ** 0.8
 
 ### 7.1 Comparacion de Baselines
 
+<p align="center">
+  <img src="../../figures/model_comparison.png" alt="Comparacion de Modelos" width="100%">
+</p>
+
 | Metrica | Popularidad | Markov |
 |---------|-------------|--------|
 | Recall@5 | **0.1867** | 0.1190 |
@@ -484,6 +496,14 @@ item_weights = 1.0 / np.arange(1, n_items + 1) ** 0.8
 | MRR@5 | **0.1172** | 0.0737 |
 | MRR@10 | **0.1271** | 0.0816 |
 | MRR@20 | **0.1324** | 0.0881 |
+
+<p align="center">
+  <img src="../../figures/recall_curves.png" alt="Curvas Recall@K" width="80%">
+</p>
+
+<p align="center">
+  <img src="../../figures/mrr_curves.png" alt="Curvas MRR@K" width="80%">
+</p>
 
 **Observaciones:**
 
@@ -497,6 +517,10 @@ item_weights = 1.0 / np.arange(1, n_items + 1) ** 0.8
 3. **El rendimiento aumenta con K** como se esperaba, con rendimientos decrecientes.
 
 ### 7.2 Entrenamiento de GRU4Rec
+
+<p align="center">
+  <img src="../../figures/training_curve.png" alt="Curva de Entrenamiento" width="80%">
+</p>
 
 ```
 Progreso de Entrenamiento:
@@ -521,6 +545,10 @@ El generador de datos sinteticos crea items siguiendo una distribucion de ley de
 #### Importancia del Protocolo de Evaluacion
 
 Usar **ranking completo** (puntuar todos los items) en lugar de negativos muestreados es crucial:
+
+<p align="center">
+  <img src="../../figures/evaluation_protocol.png" alt="Comparacion de Protocolos de Evaluacion" width="100%">
+</p>
 
 | Tipo de Evaluacion | Recall@20 (tipico) | Realidad |
 |--------------------|-------------------|----------|
