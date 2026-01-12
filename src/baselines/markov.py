@@ -10,7 +10,11 @@ import pandas as pd
 from collections import Counter, defaultdict
 from typing import Optional
 
-from ..metrics import recall_at_k, mrr_at_k
+# Handle both package and direct imports
+try:
+    from ..metrics import recall_at_k, mrr_at_k
+except ImportError:
+    from metrics import recall_at_k, mrr_at_k
 
 
 class MarkovBaseline:
