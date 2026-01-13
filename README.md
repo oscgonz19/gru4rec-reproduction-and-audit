@@ -15,6 +15,8 @@
 
 **This is NOT**: A reimplementation or fork of GRU4Rec. The model code is **not included** in this repository.
 
+<img width="1010" height="671" alt="image" src="https://github.com/user-attachments/assets/1c1dd40e-dae0-4b78-81ca-4ae6ca02fc55" />
+
 ### My Contributions
 
 - Automated pipeline (`Makefile` + scripts) for reproducible experiments
